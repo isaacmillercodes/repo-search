@@ -56,6 +56,17 @@ const Search = () => {
                 onInput={e => setSearchTerm(e.target.value)} 
               />
             </Col>
+            {/* <Col sm={9}>
+              <Form.Label column sm={3}>Sort By</Form.Label>
+              <Form.Select 
+                value={sortKey} 
+                className="d-inline-flex"
+                onChange={(e) => setSortKey(e.target.value)}
+              >
+                <option value="bestMatch">Best Match (default)</option>
+                <option value="stars">Stars</option>
+              </Form.Select>
+            </Col> */}
             <Col xs="auto" className="my-1">
               <Button type="submit">Submit</Button>
             </Col>

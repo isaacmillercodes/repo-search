@@ -6,6 +6,7 @@ import {
   Col,
   Form,
 } from 'react-bootstrap';
+import Select from 'react-select';
 import { useState, useEffect, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 
@@ -13,53 +14,66 @@ import { useHistory } from 'react-router-dom';
 const SearchResults = ({ searchResults }) => {
   const history = useHistory();
   const [resultsToDisplay, setResultsToDisplay] = useState(searchResults);
-  const [sortKey, setSortKey] = useState('bestMatch')
-  const [filterLanguages, setFilterLanguages] = useState([]);
+  // const [sortKey, setSortKey] = useState('bestMatch')
+  // const [filterLanguages, setFilterLanguages] = useState([]);
   const allLanguages = [ ...new Set(searchResults.map(repo => repo.language))].filter(language => language !== null && language !== undefined);
-
+  const languageOptions = allLanguages.map(language => {
+    const option = { value: language, label: language }
+    return option
+  })
   const goToDetails = (owner, repo) => {
     history.push(`/details/${owner}/${repo}`)
   }
 
-  const updateLanguagesForFilter = event => {
-    console.log('filterLanguages', filterLanguages)
-    console.log('updateLanguagesForFilter!', event.target.value)
+  const filterByLanguage = newLanguages => {
+    // console.log('filterLanguages', filterLanguages)
+    // console.log('updateLanguagesForFilter!', newValue)
 
-    const languageIndex = filterLanguages.indexOf(event.target.value)
-    if (languageIndex > -1) {
-      setFilterLanguages(filterLanguages.splice(languageIndex, 1))
-    } else {
-      const newLanguages = [ ...filterLanguages, event.target.value ]
-      setFilterLanguages(newLanguages)
-    }    
-  }
-
-  const filterByLanguage = useCallback(() => {
-    if (!filterLanguages.length) {
+    // const languageIndex = filterLanguages.indexOf(event.target.value)
+    // if (languageIndex > -1) {
+    //   setFilterLanguages(filterLanguages.splice(languageIndex, 1))
+    // } else {
+    //   const newLanguages = [ ...filterLanguages, event.target.value ]
+    //   setFilterLanguages(newLanguages)
+    // }    
+    if (!newLanguages.length) {
       setResultsToDisplay(searchResults)
     } else {
-      setResultsToDisplay(searchResults.filter(repo => filterLanguages.includes(repo.language)))
+      const languageList = newLanguages.map(option => option.value)
+      setResultsToDisplay(searchResults.filter(repo => languageList.includes(repo.language)))
     }
-  }, [filterLanguages, searchResults])
+  }
 
-  const sortRepos = useCallback(() => {
-    if (sortKey === 'stars') {
-      return resultsToDisplay.sort((a, b) => b.stargazers_count - a.stargazers_count)
-    }
-  }, [sortKey, resultsToDisplay])
+  // const filterByLanguage = useCallback(() => {
+  //   if (!filterLanguages.length) {
+  //     setResultsToDisplay(searchResults)
+  //   } else {
+  //     setResultsToDisplay(searchResults.filter(repo => filterLanguages.includes(repo.language)))
+  //   }
+  // }, [filterLanguages, searchResults])
 
-  useEffect(() => {
-    filterByLanguage();
-  }, [filterLanguages, filterByLanguage])
+  // const sortRepos = useCallback(() => {
+  //   if (sortKey === 'stars') {
+  //     return resultsToDisplay.sort((a, b) => b.stargazers_count - a.stargazers_count)
+  //   }
+  // }, [sortKey, resultsToDisplay])
 
-  useEffect(() => {
-    sortRepos();
-  }, [sortKey, sortRepos])
+  // useEffect(() => {
+  //   filterByLanguage();
+  // }, [filterLanguages, filterByLanguage])
+
+  // useEffect(() => {
+  //   console.log('language options became: ', languageOptions);
+  // }, [languageOptions])
+
+  // useEffect(() => {
+  //   sortRepos();
+  // }, [sortKey, sortRepos])
 
   return(
     <Container className="search-results">
       <Row className="align-items-center">
-        <Col sm={3} className="my-1">
+        {/* <Col sm={3} className="my-1">
           <Form.Group as={Row}>
             <Form.Label column sm={3}>Sort By</Form.Label>
             <Col sm={9}>
@@ -73,9 +87,9 @@ const SearchResults = ({ searchResults }) => {
               </Form.Select>
             </Col>
           </Form.Group>
-        </Col>
+        </Col> */}
         <Col xs="auto" className="my-1">
-          <Form.Group as={Row}>
+          {/* <Form.Group as={Row}>
             <Form.Label column sm={3}>Filter By Language</Form.Label>
             <Col sm={9}>
               <Form.Select
@@ -88,7 +102,17 @@ const SearchResults = ({ searchResults }) => {
                 )}
               </Form.Select>
             </Col>
-          </Form.Group>
+          </Form.Group> */}
+          <Select
+            defaultValue={[]}
+            isMulti
+            name="languageFilter"
+            options={languageOptions}
+            onChange={filterByLanguage}
+            className="basic-multi-select"
+            classNamePrefix="select"
+            placeholder="Filter by language"
+          />
         </Col>
       </Row>
       { resultsToDisplay.length > 0 && resultsToDisplay.map(repo => 
