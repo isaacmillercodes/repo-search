@@ -5,10 +5,13 @@ import {
   Row,
   Col,
   Button,
-  Card,
+  Spinner,
 } from 'react-bootstrap';
 import { useState } from 'react';
+// import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import SearchResults from './SearchResults'
+import NoResultsMessage from './NoResultsMessage'
 
 const baseUrl = 'https://api.github.com/search/repositories?'
 
@@ -16,18 +19,29 @@ const Search = () => {
 
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResults, setSearchResults] = useState([])
+  const [hasSearched, setHasSearched] = useState(false)
+  const [searchInProgress, setSearchInProgress] = useState(false)
+  // const history = useHistory();
 
 
   const search = async (event) => {
-    event.preventDefault()
-    const paramsObj = { q: searchTerm, per_page: 100, page: 5 }
+    event.preventDefault();
+    setSearchInProgress(true);
+    setHasSearched(true);
+    const paramsObj = { q: searchTerm }
+    // const paramsObj = { q: searchTerm, per_page: 100, page: 5 }
     const params = new URLSearchParams(paramsObj)
     const response = await axios.get(`${baseUrl}${params.toString()}`)
     if (response?.data?.items) {
+      console.log('wow!', response.data.items[0])
       setSearchResults(response.data.items)
     }
-
+    setSearchInProgress(false);
   }
+
+  // const goToDetails = (owner, repo) => {
+  //   history.push(`/details/${owner}/${repo}`)
+  // }
 
 
   return(
@@ -47,13 +61,21 @@ const Search = () => {
             </Col>
           </Row>
         </Form>
-        <Container className="search-sesults">
-          { searchResults.length > 0 && searchResults.map(repo => 
-            <Card key={repo.id}>
-              <Card.Body>{ repo.id } - { repo.name } </Card.Body>
-            </Card>
-          )}
-        </Container>
+        { searchInProgress ? (
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        ) : searchResults.length > 0 ? (
+          <SearchResults searchResults={searchResults} />
+        ) : (
+          <NoResultsMessage hasSearched={hasSearched} />
+        )}
+
+        {/* { searchResults.length > 0 ? (
+          <SearchResults searchResults={searchResults} />
+        ) : (
+          <NoResultsMessage hasSearched={hasSearched} />
+        )} */}
      </Container>
   )
 }
