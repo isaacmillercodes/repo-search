@@ -9,7 +9,6 @@ import {
 import Search from './components/search/Search'
 import Details from './components/details/Details'
 
-
 const App = () => {
   return(
     <Router>

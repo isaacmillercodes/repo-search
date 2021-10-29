@@ -20,7 +20,6 @@ const Details = () => {
   const getRepo = useCallback(async () => {
     setFetchingDetails(true)
     const response = await axios.get(`${baseUrl}/${owner}/${repo}`)
-    console.log('details response!', response.data)
     if (response.data) {
       setDetails(response.data)
     }
@@ -32,9 +31,6 @@ const Details = () => {
       getRepo()
     }
   }, [owner, repo, getRepo])
-
-
-
 
   return(
       <Container className="details mt-3">

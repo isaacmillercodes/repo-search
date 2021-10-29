@@ -9,7 +9,6 @@ import Select from 'react-select'
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
-
 const SearchResults = ({ searchResults }) => {
   const history = useHistory()
   const [resultsToDisplay, setResultsToDisplay] = useState(searchResults)
