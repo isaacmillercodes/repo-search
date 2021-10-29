@@ -34,7 +34,7 @@ const SearchResults = ({ searchResults }) => {
   return(
     <Container className="search-results">
       <Row className="align-items-center">
-        <Col xs="auto" className="my-1">
+        <Col sm={4} className="my-1">
           <Select
             defaultValue={[]}
             isMulti
@@ -44,12 +44,19 @@ const SearchResults = ({ searchResults }) => {
             className="basic-multi-select"
             classNamePrefix="select"
             placeholder="Filter by language"
+            size={1}
           />
         </Col>
       </Row>
       { resultsToDisplay.length > 0 && resultsToDisplay.map(repo => 
-        <Card key={repo.id} onClick={() => goToDetails(repo.owner.login, repo.name)}>
-          <Card.Body>{ repo.id } - { repo.name } - { repo.stargazers_count } - { repo.language } </Card.Body>
+        <Card 
+          key={repo.id} 
+          onClick={() => goToDetails(repo.owner.login, repo.name)}
+          className="search-results-card my-3"
+          bg="light"
+          text="dark"
+        >
+          <Card.Body>{ repo.name } by {repo.owner.login} ({ repo.language }, {repo.stargazers_count})</Card.Body>
         </Card>
       )}
     </Container>

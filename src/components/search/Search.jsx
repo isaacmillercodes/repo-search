@@ -46,7 +46,6 @@ const Search = () => {
             <Col sm={{span: 4, offset: 2}} className="my-1">
               <FloatingLabel controlId="searchLabel" label="Search Term">
                 <Form.Control 
-                  id="repoSearchInput" 
                   placeholder="Search all public repos on Github" 
                   value={searchTerm} 
                   onInput={e => setSearchTerm(e.target.value)} 

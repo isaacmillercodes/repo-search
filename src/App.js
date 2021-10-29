@@ -6,9 +6,6 @@ import {
   Switch,
   Route,
 } from 'react-router-dom'
-// import { 
-//   Container,
-// } from 'react-bootstrap'
 import Search from './components/search/Search'
 import Details from './components/details/Details'
 
@@ -25,9 +22,6 @@ const App = () => {
         </Route>
       </Switch>
     </Router>
-    //   <Container className="App">
-    //     <Search />
-    //  </Container>
   )
 }
 
