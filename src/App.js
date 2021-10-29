@@ -1,14 +1,14 @@
-import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.scss';
+import React from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './App.scss'
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-} from 'react-router-dom';
+} from 'react-router-dom'
 // import { 
 //   Container,
-// } from 'react-bootstrap';
+// } from 'react-bootstrap'
 import Search from './components/search/Search'
 import Details from './components/details/Details'
 
@@ -31,4 +31,4 @@ const App = () => {
   )
 }
 
-export default App;
+export default App

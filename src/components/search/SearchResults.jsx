@@ -1,22 +1,19 @@
-import React from 'react';
+import React from 'react'
 import { 
   Container,
   Card,
   Row,
   Col,
-  Form,
-} from 'react-bootstrap';
-import Select from 'react-select';
-import { useState, useEffect, useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
+} from 'react-bootstrap'
+import Select from 'react-select'
+import { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 
 
 const SearchResults = ({ searchResults }) => {
-  const history = useHistory();
-  const [resultsToDisplay, setResultsToDisplay] = useState(searchResults);
-  // const [sortKey, setSortKey] = useState('bestMatch')
-  // const [filterLanguages, setFilterLanguages] = useState([]);
-  const allLanguages = [ ...new Set(searchResults.map(repo => repo.language))].filter(language => language !== null && language !== undefined);
+  const history = useHistory()
+  const [resultsToDisplay, setResultsToDisplay] = useState(searchResults)
+  const allLanguages = [ ...new Set(searchResults.map(repo => repo.language))].filter(language => language !== null && language !== undefined)
   const languageOptions = allLanguages.map(language => {
     const option = { value: language, label: language }
     return option
@@ -26,16 +23,6 @@ const SearchResults = ({ searchResults }) => {
   }
 
   const filterByLanguage = newLanguages => {
-    // console.log('filterLanguages', filterLanguages)
-    // console.log('updateLanguagesForFilter!', newValue)
-
-    // const languageIndex = filterLanguages.indexOf(event.target.value)
-    // if (languageIndex > -1) {
-    //   setFilterLanguages(filterLanguages.splice(languageIndex, 1))
-    // } else {
-    //   const newLanguages = [ ...filterLanguages, event.target.value ]
-    //   setFilterLanguages(newLanguages)
-    // }    
     if (!newLanguages.length) {
       setResultsToDisplay(searchResults)
     } else {
@@ -44,65 +31,10 @@ const SearchResults = ({ searchResults }) => {
     }
   }
 
-  // const filterByLanguage = useCallback(() => {
-  //   if (!filterLanguages.length) {
-  //     setResultsToDisplay(searchResults)
-  //   } else {
-  //     setResultsToDisplay(searchResults.filter(repo => filterLanguages.includes(repo.language)))
-  //   }
-  // }, [filterLanguages, searchResults])
-
-  // const sortRepos = useCallback(() => {
-  //   if (sortKey === 'stars') {
-  //     return resultsToDisplay.sort((a, b) => b.stargazers_count - a.stargazers_count)
-  //   }
-  // }, [sortKey, resultsToDisplay])
-
-  // useEffect(() => {
-  //   filterByLanguage();
-  // }, [filterLanguages, filterByLanguage])
-
-  // useEffect(() => {
-  //   console.log('language options became: ', languageOptions);
-  // }, [languageOptions])
-
-  // useEffect(() => {
-  //   sortRepos();
-  // }, [sortKey, sortRepos])
-
   return(
     <Container className="search-results">
       <Row className="align-items-center">
-        {/* <Col sm={3} className="my-1">
-          <Form.Group as={Row}>
-            <Form.Label column sm={3}>Sort By</Form.Label>
-            <Col sm={9}>
-              <Form.Select 
-                value={sortKey} 
-                className="d-inline-flex"
-                onChange={(e) => setSortKey(e.target.value)}
-              >
-                <option value="bestMatch">Best Match (default)</option>
-                <option value="stars">Stars</option>
-              </Form.Select>
-            </Col>
-          </Form.Group>
-        </Col> */}
         <Col xs="auto" className="my-1">
-          {/* <Form.Group as={Row}>
-            <Form.Label column sm={3}>Filter By Language</Form.Label>
-            <Col sm={9}>
-              <Form.Select
-                value={filterLanguages}
-                onChange={updateLanguagesForFilter}
-                multiple
-              >
-                { allLanguages.map((language, index) => 
-                  <option key={index} value={language}>{language}</option>
-                )}
-              </Form.Select>
-            </Col>
-          </Form.Group> */}
           <Select
             defaultValue={[]}
             isMulti
@@ -124,4 +56,4 @@ const SearchResults = ({ searchResults }) => {
   )
 }
 
-export default SearchResults;
+export default SearchResults

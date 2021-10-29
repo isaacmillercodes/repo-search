@@ -1,7 +1,7 @@
-import React from 'react';
+import React from 'react'
 import { 
   Container,
-} from 'react-bootstrap';
+} from 'react-bootstrap'
 
 
 const NoResultsMessage = ({ hasSearched }) => {
@@ -13,4 +13,4 @@ const NoResultsMessage = ({ hasSearched }) => {
   )
 }
 
-export default NoResultsMessage;
+export default NoResultsMessage
